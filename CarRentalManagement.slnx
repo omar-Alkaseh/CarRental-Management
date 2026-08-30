@@ -1,7 +1,7 @@
 <Solution>
   <Folder Name="/src/">
     <Project Path="src/Application/CarRental.Application.csproj" />
-    <Project Path="src/Car Rental Management/CarRental.Api.csproj" />
+    <Project Path="src/Api/CarRental.Api.csproj" />
     <Project Path="src/Domain/CarRental.Domain.csproj" />
     <Project Path="src/Infrastructure/CarRental.Infrastructure.csproj" />
   </Folder>
