@@ -1,8 +1,8 @@
 <Solution>
   <Folder Name="/src/">
-    <Project Path="Application/CarRental.Application.csproj" />
-    <Project Path="Car Rental Management/CarRental.Api.csproj" />
-    <Project Path="Domain/CarRental.Domain.csproj" />
-    <Project Path="Infrastructure/CarRental.Infrastructure.csproj" />
+    <Project Path="src/Application/CarRental.Application.csproj" />
+    <Project Path="src/Car Rental Management/CarRental.Api.csproj" />
+    <Project Path="src/Domain/CarRental.Domain.csproj" />
+    <Project Path="src/Infrastructure/CarRental.Infrastructure.csproj" />
   </Folder>
 </Solution>
