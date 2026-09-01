@@ -2,6 +2,7 @@
 {
     public enum ReservationStatus : byte
     {
+        Unspecified = 0,
         Pending = 1,
         Confirmed = 2,
         Cancelled = 3,

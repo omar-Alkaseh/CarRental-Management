@@ -2,6 +2,7 @@
 {
     public enum InvoiceStatus : byte
     {
+        Unspecified = 0,
         Draft = 1,
         Issued = 2,
         PartiallyPaid = 3,

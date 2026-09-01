@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using CarRental.Domain.Billing.Entities;
+using CarRental.Domain.Billing.Enums;
 
 namespace CarRental.Infrastructure.Data.Configurations.Billing
 {
@@ -31,7 +32,7 @@ namespace CarRental.Infrastructure.Data.Configurations.Billing
             builder.Property(e => e.RowVersion)
                 .IsRowVersion()
                 .IsConcurrencyToken();
-            builder.Property(e => e.Status).HasDefaultValue((byte)1);
+            builder.Property(e => e.Status).HasDefaultValue(InvoiceStatus.Draft).HasSentinel(InvoiceStatus.Unspecified);
             builder.Property(e => e.Subtotal).HasColumnType("decimal(18, 2)");
             builder.Property(e => e.TaxAmount).HasColumnType("decimal(18, 2)");
             builder.Property(e => e.TotalAmount).HasColumnType("decimal(18, 2)");

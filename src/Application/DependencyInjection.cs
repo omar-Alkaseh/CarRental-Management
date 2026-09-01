@@ -1,6 +1,5 @@
 ﻿using CarRental.Application.Common.Behaviors;
 using FluentValidation;
-using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CarRental.Application

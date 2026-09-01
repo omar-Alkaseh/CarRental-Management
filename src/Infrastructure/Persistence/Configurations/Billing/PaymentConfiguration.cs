@@ -1,4 +1,5 @@
 ﻿using CarRental.Domain.Billing.Entities;
+using CarRental.Domain.Billing.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -39,7 +40,7 @@ namespace CarRental.Infrastructure.Data.Configurations.Billing
             builder.Property(e => e.RowVersion)
                 .IsRowVersion()
                 .IsConcurrencyToken();
-            builder.Property(e => e.Status).HasDefaultValue((byte)1);
+            builder.Property(e => e.Status).HasDefaultValue(PaymentStatus.Pending).HasSentinel(PaymentStatus.Unspecified);
             builder.Property(e => e.TransactionReference).HasMaxLength(200);
             builder.Property(e => e.UpdatedAtUtc).HasPrecision(0);
 

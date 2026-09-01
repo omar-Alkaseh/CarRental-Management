@@ -19,7 +19,7 @@ public partial class RentalAgreement
 
     public int? CheckinEmployeeId { get; set; }
 
-    public RentalAgreementStatus Status { get; set; }
+    public RentalAgreementStatus Status { get; set; } = RentalAgreementStatus.Open;
 
     public DateTime ActualPickupAtUtc { get; set; }
 
