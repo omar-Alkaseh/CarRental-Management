@@ -11,7 +11,7 @@ public partial class Invoice
 
     public long RentalAgreementId { get; set; }
 
-    public InvoiceStatus Status { get; set; }
+    public InvoiceStatus Status { get; set; } = InvoiceStatus.Draft;
 
     public decimal Subtotal { get; set; }
 

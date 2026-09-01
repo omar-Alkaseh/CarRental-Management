@@ -26,7 +26,7 @@ public partial class Reservation
 
     public DateTime ExpectedReturnAtUtc { get; set; }
 
-    public ReservationStatus Status { get; set; }
+    public ReservationStatus Status { get; set; } = ReservationStatus.Pending;
 
     public short EstimatedRentalDays { get; set; }
 

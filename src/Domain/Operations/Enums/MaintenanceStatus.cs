@@ -2,6 +2,7 @@
 {
     public enum MaintenanceStatus : byte
     {
+        Unspecified = 0,
         Scheduled = 1,
         InProgress = 2,
         Completed = 3,

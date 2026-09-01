@@ -19,7 +19,7 @@ public partial class Payment
 
     public PaymentMethod PaymentMethod { get; set; }
 
-    public PaymentStatus Status { get; set; }
+    public PaymentStatus Status { get; set; } = PaymentStatus.Pending;
 
     public decimal Amount { get; set; }
 

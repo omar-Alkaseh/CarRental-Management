@@ -22,5 +22,8 @@
 
         public static new Result<T> Failure(Error? error)
             => new(error);
+
+        public static implicit operator Result<T>(Error error) =>
+            Failure(error);
     }
 }

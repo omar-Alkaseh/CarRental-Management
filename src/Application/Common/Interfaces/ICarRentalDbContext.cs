@@ -7,6 +7,8 @@ namespace CarRental.Application.Common.Interfaces
     {
         DbSet<VehicleModel> VehicleModels { get; }
 
+        DbSet<VehicleMake> VehicleMakes { get; }
+
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

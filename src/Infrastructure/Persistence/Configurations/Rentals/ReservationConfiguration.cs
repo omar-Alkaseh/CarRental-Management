@@ -1,4 +1,5 @@
 ﻿using CarRental.Domain.Rentals.Entities;
+using CarRental.Domain.Rentals.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -41,7 +42,7 @@ namespace CarRental.Infrastructure.Data.Configurations.Rentals
             builder.Property(e => e.RowVersion)
                 .IsRowVersion()
                 .IsConcurrencyToken();
-            builder.Property(e => e.Status).HasDefaultValue((byte)1);
+            builder.Property(e => e.Status).HasDefaultValue(ReservationStatus.Pending).HasSentinel(ReservationStatus.Unspecified);
             builder.Property(e => e.TaxAmount).HasColumnType("decimal(18, 2)");
             builder.Property(e => e.UpdatedAtUtc).HasPrecision(0);
 

@@ -31,7 +31,7 @@ public partial class Vehicle
 
     public decimal CurrentFuelLevel { get; set; }
 
-    public VehicleOperationalStatus OperationalStatus { get; set; }
+    public VehicleOperationalStatus OperationalStatus { get; set; } = VehicleOperationalStatus.Available;
 
     public DateOnly? RegistrationExpiryDate { get; set; }
 

@@ -1,4 +1,5 @@
 ﻿using CarRental.Domain.Operations.Entities;
+using CarRental.Domain.Operations.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -25,7 +26,7 @@ namespace CarRental.Infrastructure.Data.Configurations.Operations
             builder.Property(e => e.ScheduledStartAtUtc).HasPrecision(0);
             builder.Property(e => e.ServiceProvider).HasMaxLength(200);
             builder.Property(e => e.StartedAtUtc).HasPrecision(0);
-            builder.Property(e => e.Status).HasDefaultValue((byte)1);
+            builder.Property(e => e.Status).HasDefaultValue(MaintenanceStatus.Scheduled).HasSentinel(MaintenanceStatus.Unspecified);
             builder.Property(e => e.UpdatedAtUtc).HasPrecision(0);
 
             builder.HasOne(d => d.CreatedByEmployee).WithMany(p => p.MaintenanceRecords)

@@ -14,7 +14,7 @@ public partial class MaintenanceRecord
 
     public MaintenanceType MaintenanceType { get; set; }
 
-    public MaintenanceStatus Status { get; set; }
+    public MaintenanceStatus Status { get; set; } = MaintenanceStatus.Scheduled;
 
     public string Description { get; set; } = null!;
 

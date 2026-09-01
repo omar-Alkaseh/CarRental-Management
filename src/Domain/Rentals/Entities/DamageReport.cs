@@ -14,7 +14,7 @@ public partial class DamageReport
 
     public DamageReportSeverity Severity { get; set; }
 
-    public DamageReportStatus Status { get; set; }
+    public DamageReportStatus Status { get; set; } = DamageReportStatus.Reported;
 
     public decimal? EstimatedRepairCost { get; set; }
 

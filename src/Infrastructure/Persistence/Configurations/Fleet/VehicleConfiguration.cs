@@ -1,4 +1,6 @@
-﻿using CarRental.Domain.Fleet.Entities;
+﻿using CarRental.Domain.Billing.Enums;
+using CarRental.Domain.Fleet.Entities;
+using CarRental.Domain.Fleet.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -25,7 +27,7 @@ namespace CarRental.Infrastructure.Data.Configurations.Fleet
                 .HasColumnType("decimal(5, 2)");
             builder.Property(e => e.IsActive).HasDefaultValue(true);
             builder.Property(e => e.LicensePlate).HasMaxLength(20);
-            builder.Property(e => e.OperationalStatus).HasDefaultValue((byte)1);
+            builder.Property(e => e.OperationalStatus).HasDefaultValue(VehicleOperationalStatus.Available).HasSentinel(VehicleOperationalStatus.Unspecified);
             builder.Property(e => e.RowVersion)
                 .IsRowVersion()
                 .IsConcurrencyToken();
