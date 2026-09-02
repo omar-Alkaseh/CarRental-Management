@@ -5,7 +5,7 @@ using CarRental.Domain.Fleet.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace CarRental.Application.Features.VehicleMakes.Commands.CreateVehicleMake
+namespace CarRental.Application.Features.VehicleMakes.Commands.CreateVehicleMakes
 {
     public sealed class CreateVehicleMakeCommandHandler(ICarRentalDbContext context) : IRequestHandler<CreateVehicleMakeCommand, Result<int>>
     {
@@ -28,7 +28,7 @@ namespace CarRental.Application.Features.VehicleMakes.Commands.CreateVehicleMake
 
             await context.SaveChangesAsync(cancellationToken);
 
-            return Result<int>.Success(vehicleMake.VehicleMakeId);
+            return Result<int>.Success(vehicleMake.Id);
         }
     }
 }
