@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace CarRental.Application.Features.VehicleMakes.Commands.CreateVehicleMake
+namespace CarRental.Application.Features.VehicleMakes.Commands.CreateVehicleMakes
 {
     public class CreateVehicleMakeCommandValidator : AbstractValidator<CreateVehicleMakeCommand>
     {
@@ -10,7 +10,7 @@ namespace CarRental.Application.Features.VehicleMakes.Commands.CreateVehicleMake
             .NotEmpty()
             .WithMessage("Vehicle Make Name should not be empty!")
             .Must(name => !name.All(char.IsDigit))
-            .WithMessage("Vehicle Make Name should contain letters only.");
+            .WithMessage("Vehicle Make Name should not contain only Ditigts.");
         }
     }
 }
