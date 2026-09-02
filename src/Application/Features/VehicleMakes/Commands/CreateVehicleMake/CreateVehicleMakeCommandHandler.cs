@@ -1,6 +1,6 @@
 ﻿using CarRental.Application.Common.Interfaces;
 using CarRental.Application.Common.Results;
-using CarRental.Application.Features.VehicleMakes.Erros;
+using CarRental.Application.Features.VehicleMakes.Errors;
 using CarRental.Domain.Fleet.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
