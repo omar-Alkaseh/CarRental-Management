@@ -22,12 +22,13 @@ namespace CarRental.Api.Exceptions
                         Status = StatusCodes.Status400BadRequest
                     },
 
-                _ => new ProblemDetails
-                {
-                    Title = "Server Error",
-                    Detail = "An unexpected error occurred.",
-                    Status = StatusCodes.Status500InternalServerError
-                }
+                _ => 
+                    new ProblemDetails
+                    {
+                        Title = "Server Error",
+                        Detail = "An unexpected error occurred.",
+                        Status = StatusCodes.Status500InternalServerError
+                    }
             };
 
             httpContext.Response.StatusCode = 
