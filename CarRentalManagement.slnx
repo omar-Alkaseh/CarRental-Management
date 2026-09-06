@@ -5,4 +5,7 @@
     <Project Path="src/Domain/CarRental.Domain.csproj" />
     <Project Path="src/Infrastructure/CarRental.Infrastructure.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="CarRenta.Application.UnitTests/CarRenta.Application.UnitTests.csproj" Id="45d55403-26ca-4751-b38c-e6328614e4c0" />
+  </Folder>
 </Solution>
