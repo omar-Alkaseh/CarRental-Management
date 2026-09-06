@@ -38,7 +38,7 @@ namespace Car_Rental_Management.Features.VehicleMakes
             return Ok(result);
         }
 
-        [HttpPut("{id:int}")]
+        [HttpPut("{Id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

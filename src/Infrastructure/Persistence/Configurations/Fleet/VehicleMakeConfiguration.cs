@@ -12,6 +12,9 @@ namespace CarRental.Infrastructure.Data.Configurations.Fleet
 
             builder.HasIndex(e => e.Name, "UQ_VehicleMakes_Name").IsUnique();
 
+            builder.Property(x => x.Id)
+            .HasColumnName("VehicleMakeId");
+
             builder.Property(e => e.IsActive).HasDefaultValue(true);
             builder.Property(e => e.Name).HasMaxLength(80);
         }
