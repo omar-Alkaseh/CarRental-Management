@@ -13,6 +13,7 @@ namespace Car_Rental_Management.Features.VehicleMakes
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Create(
             CreateVehicleMakeRequest request,
             CancellationToken cancellationToken)
