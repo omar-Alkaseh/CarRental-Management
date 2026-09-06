@@ -1,11 +1,17 @@
-namespace CarRenta.Application.UnitTests
+namespace CarRenta.Application.UnitTests.Features.VehicleMakes.Commands.CreateVehicleMake
 {
-    public class UnitTest1
+    public class CreateVehicleMakeHandlerTests
     {
         [Fact]
-        public void Test1()
+        public async Task Handle_WhenNameDoesNotExist_ShouldCreateVehicleMake()
         {
+            // Arrange
 
+
+            // Act
+
+
+            // Assert
         }
     }
 }
