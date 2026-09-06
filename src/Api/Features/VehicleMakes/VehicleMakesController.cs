@@ -4,7 +4,10 @@ using CarRental.Application.Features.VehicleMakes.Commands.CreateVehicleMakes;
 using CarRental.Application.Features.VehicleMakes.Commands.UpdateVehicleMakes;
 using CarRental.Application.Features.VehicleMakes.Mappings;
 using CarRental.Application.Features.VehicleMakes.Requests;
+<<<<<<< HEAD
 using CarRental.Application.Features.VehicleMakes.Responses;
+=======
+>>>>>>> edc635e (fix issue bug in vehicle make controller)
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
