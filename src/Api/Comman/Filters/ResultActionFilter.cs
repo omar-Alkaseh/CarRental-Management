@@ -17,7 +17,14 @@ namespace Car_Rental_Management.Comman.Filters
                 return;
 
             if (result.IsSuccess)
+            {
+                if (objectResult.Value is IResultValue resultValue)
+                {
+                    objectResult.Value = resultValue.Value;
+                }
+
                 return;
+            }
 
             var error = result.Error!;
 

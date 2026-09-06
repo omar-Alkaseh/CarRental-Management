@@ -1,6 +1,6 @@
 ﻿namespace CarRental.Application.Common.Results
 {
-    public class Result<T> : Result
+    public class Result<T> : Result, IResultValue
     {
         private Result(T value)
             : base(true, null)
@@ -16,6 +16,8 @@
         }
 
         public T? Value { get; }
+
+        object? IResultValue.Value => Value;
 
         public static Result<T> Success(T value)
             => new(value);
