@@ -20,6 +20,7 @@ namespace Car_Rental_Management.Features.VehicleMakes
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Create(
             CreateVehicleMakeRequest request,
             CancellationToken cancellationToken)
@@ -34,7 +35,7 @@ namespace Car_Rental_Management.Features.VehicleMakes
             return Ok(result);
         }
 
-        [HttpPut("{id:int}")]
+        [HttpPut("{Id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
