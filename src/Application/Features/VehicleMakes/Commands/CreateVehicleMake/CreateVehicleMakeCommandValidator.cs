@@ -9,7 +9,7 @@ namespace CarRental.Application.Features.VehicleMakes.Commands.CreateVehicleMake
             RuleFor(x => x.Name)
             .NotEmpty()
             .WithMessage("Vehicle Make Name should not be empty!")
-            .Must(name => !name.All(char.IsDigit))
+            .Must(name => !name.Trim().All(char.IsDigit))
             .WithMessage("Vehicle Make Name should not contain only Ditigts.");
         }
     }
