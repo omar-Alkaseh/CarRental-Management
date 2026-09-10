@@ -11,7 +11,7 @@ namespace CarRenta.Application.UnitTests.Features.VehicleMakes.Commands.CreateVe
     public class CreateVehicleMakeHandlerTests
     {
         [Fact]
-        public async Task Handle_WhenNameDoesNotExist_ShouldCreateVehicleMake()
+        public async Task Handle_WhenNameDoesNotExists_ShouldCreateVehicleMake()
         {
             // Arrange
 
@@ -46,14 +46,11 @@ namespace CarRenta.Application.UnitTests.Features.VehicleMakes.Commands.CreateVe
 
             var command = new CreateVehicleMakeCommand(vehicleName);
 
-
             // Act
 
             Result<int> result = await handler.Handle(command, CancellationToken.None);
 
-
             // Assert
-
 
             result.IsSuccess.Should().BeTrue();
             result.Value.Should().Be(1);
@@ -73,16 +70,18 @@ namespace CarRenta.Application.UnitTests.Features.VehicleMakes.Commands.CreateVe
 
 
         [Fact]
-        public async Task Handle_WhenNameIsExist_ShouldThrowErrorNameAlreadyExist()
+        public async Task Handle_WhenNameExists_ShouldReturnNameAlreadyExistsError()
         {
             // Arrange
+
+            var vehicleName = "Kia";
 
             var vehicleMakes = new List<VehicleMake>()
             {
                 new VehicleMake
                 {
                     Id = 1,
-                    Name = "Kia"
+                    Name = vehicleName
                 }
             };
 
@@ -94,28 +93,17 @@ namespace CarRenta.Application.UnitTests.Features.VehicleMakes.Commands.CreateVe
                 Setup(x => x.VehicleMakes)
                 .Returns(vehicleMakeDbSet.Object);
 
-            vehicleMakeDbSet
-                .Setup(x => x.AddAsync(
-                    It.IsAny<VehicleMake>(),
-                    It.IsAny<CancellationToken>()))
-                .Callback<VehicleMake, CancellationToken>(
-                    (vehicleMake, _) =>
-                    {
-                        vehicleMake.Id = 1;
-                    }
-                );
-
-            contextMock
-                .Setup(v => v.SaveChangesAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(1);
 
             var handler = new CreateVehicleMakeCommandHandler(contextMock.Object);
 
-            var command = new CreateVehicleMakeCommand("Kia");
+            var command = new CreateVehicleMakeCommand(vehicleName);
 
             // Act
 
-            Result<int> result = await handler.Handle(command, CancellationToken.None);
+            Result<int> result = 
+                await handler.Handle(
+                    command, 
+                    CancellationToken.None);
 
             // Assert
 
@@ -125,8 +113,7 @@ namespace CarRenta.Application.UnitTests.Features.VehicleMakes.Commands.CreateVe
 
             vehicleMakeDbSet.Verify(
                 x => x.AddAsync(
-                    It.Is<VehicleMake>(
-                        v => v.Name == "Kia"),
+                    It.IsAny<VehicleMake>(),
                     It.IsAny<CancellationToken>()),
                 Times.Never);
 

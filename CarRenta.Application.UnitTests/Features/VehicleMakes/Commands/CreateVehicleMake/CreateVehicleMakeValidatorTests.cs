@@ -1,19 +1,36 @@
 ﻿using CarRental.Application.Features.VehicleMakes.Commands.CreateVehicleMakes;
-using FluentAssertions;
+using FluentValidation.TestHelper;
 
 namespace CarRenta.Application.UnitTests.Features.VehicleMakes.Commands.CreateVehicleMake
 {
     public class CreateVehicleMakeValidatorTests
     {
-        //RuleFor(x => x.Name)
-        //    .NotEmpty()
-        //    .WithMessage("Vehicle Make Name should not be empty!")
-        //    .Must(name => !name.All(char.IsDigit))
-        //    .WithMessage("Vehicle Make Name should not contain only Ditigts.");
         [Theory]
         [InlineData("")]
         [InlineData(" ")]
-        public async Task Validator_WhenNameIsInvalid_ShouldHaveValidationError(string name)
+        [InlineData("     ")]
+        public async Task Validator_WhenNameIsEmpty_ShouldHaveValidationError(string name)
+        {
+            // Arrange
+            var validator = new CreateVehicleMakeCommandValidator();
+
+            var command = new CreateVehicleMakeCommand(name);
+
+            // Act
+            var result = await validator.TestValidateAsync(command);
+
+            // Assert
+            result.ShouldHaveValidationErrorFor(n => n.Name)
+                .WithErrorMessage("Vehicle Make Name should not be empty!");
+        }
+
+
+        [Theory]
+        [InlineData("254")]
+        [InlineData("Kia254")]
+        [InlineData("Kia 254")]
+        [InlineData("2 Kia")]
+        public async Task Validator_WhenNameContainsDigits_ShouldHaveValidationError(string name)
         {
             // Arrange
             var validator = new CreateVehicleMakeCommandValidator();
@@ -22,31 +39,61 @@ namespace CarRenta.Application.UnitTests.Features.VehicleMakes.Commands.CreateVe
 
             // Act
 
-            var result = await validator.ValidateAsync(command);
+            var result = await validator.TestValidateAsync(command);
 
             // Assert
-            result.IsValid.Should().BeFalse();
+            result.ShouldHaveValidationErrorFor(x => x.Name)
+                .WithErrorMessage("Vehicle Make Name must contain letters separated only by single spaces or hyphens.");
         }
 
 
-
-        public async Task Validator_WhenNameIsValid_ShouldThrowValidationException()
+        [Theory]
+        [InlineData("Kia@")]
+        [InlineData("@Kia")]
+        [InlineData("Kia#$")]
+        [InlineData("K#ia")]
+        [InlineData("-Kia")]
+        [InlineData("Kia-")]
+        [InlineData(" Kia")]
+        [InlineData("Kia ")]
+        [InlineData("Land  Rover")]
+        [InlineData("Mercedes--Benz")]
+        public async Task Validator_WhenNameHasInvalidFormat_ShouldHaveValidationError(string name)
         {
+            // Arrange
+            var validator = new CreateVehicleMakeCommandValidator();
 
+            var command = new CreateVehicleMakeCommand(name);
+
+            // Act
+            var result = await validator.TestValidateAsync(command);
+
+            // Assert
+            result.ShouldHaveValidationErrorFor(x => x.Name)
+                .WithErrorMessage("Vehicle Make Name must contain letters separated only by single spaces or hyphens.");
         }
 
 
-
-        public async Task Validator_WhenNameContainsOnlyDigits_ShouldHaveValidationError()
+        [Theory]
+        [InlineData("Kia")]
+        [InlineData("Toyota")]
+        [InlineData("Land Rover")]
+        [InlineData("Mercedes-Benz")]
+        public async Task Validator_WhenNameIsValid_ShouldNotHaveValidationError(string name)
         {
+            // Arrange
 
-        }
+            var validator = new CreateVehicleMakeCommandValidator();
 
+            var command = new CreateVehicleMakeCommand(name);
 
+            // Act
 
-        public async Task Validator_WhenNameContainsLettersAndDigits_ShouldHaveValidationError()
-        {
+            var result = await validator.TestValidateAsync(command);
 
+            // Assert 
+
+            result.ShouldNotHaveValidationErrorFor(x => x.Name);
         }
     }
 }
