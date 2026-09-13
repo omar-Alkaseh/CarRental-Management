@@ -1,4 +1,4 @@
-﻿using CarRental.Domain.Core.Entities;
+﻿using CarRental.Domain.Customers.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

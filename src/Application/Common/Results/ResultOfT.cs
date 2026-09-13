@@ -3,13 +3,13 @@
     public class Result<T> : Result, IResultValue
     {
         private Result(T value)
-            : base(true, null)
+            : base(true, Error.None)
         {
             Value = value;
         }
 
 
-        private Result(Error? error)
+        private Result(Error error)
             : base(false, error)
         {
             
@@ -22,7 +22,7 @@
         public static Result<T> Success(T value)
             => new(value);
 
-        public static new Result<T> Failure(Error? error)
+        public static new Result<T> Failure(Error error)
             => new(error);
 
         public static implicit operator Result<T>(Error error) =>

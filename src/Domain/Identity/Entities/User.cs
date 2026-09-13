@@ -1,4 +1,5 @@
 ﻿using CarRental.Domain.Core.Entities;
+using CarRental.Domain.Customers.Entities;
 using CarRental.Domain.Operations.Entities;
 using CarRental.Domain.Rentals.Entities;
 

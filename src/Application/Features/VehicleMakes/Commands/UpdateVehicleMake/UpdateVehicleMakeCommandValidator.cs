@@ -2,9 +2,9 @@ using FluentValidation;
 
 namespace CarRental.Application.Features.VehicleMakes.Commands.UpdateVehicleMakes;
 
-public sealed class UpdateVehicleMakeValidator : AbstractValidator<UpdateVehicleMakeCommand>
+public sealed class UpdateVehicleMakeCommandValidator : AbstractValidator<UpdateVehicleMakeCommand>
 {
-    public UpdateVehicleMakeValidator()
+    public UpdateVehicleMakeCommandValidator()
     {
         RuleFor(x => x.Id)
         .GreaterThanOrEqualTo(1)

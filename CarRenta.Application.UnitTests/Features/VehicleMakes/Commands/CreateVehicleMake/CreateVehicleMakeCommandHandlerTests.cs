@@ -8,14 +8,14 @@ using MockQueryable.Moq;
 using Moq;
 namespace CarRenta.Application.UnitTests.Features.VehicleMakes.Commands.CreateVehicleMake
 {
-    public class CreateVehicleMakeHandlerTests
+    public class CreateVehicleMakeCommandHandlerTests
     {
         [Fact]
         public async Task Handle_WhenNameDoesNotExists_ShouldCreateVehicleMake()
         {
             // Arrange
 
-            var vehicleName = "Kia";
+            var vehicleName = "Samsung";
 
             var vehicleMakes = new List<VehicleMake>();
 
@@ -27,6 +27,8 @@ namespace CarRenta.Application.UnitTests.Features.VehicleMakes.Commands.CreateVe
                 Setup(x => x.VehicleMakes)
                 .Returns(vehicleMakeDbSet.Object);
 
+            VehicleMake? createdVehicleMake = null;
+
             vehicleMakeDbSet
                 .Setup(x => x.AddAsync(
                     It.IsAny<VehicleMake>(),
@@ -34,7 +36,7 @@ namespace CarRenta.Application.UnitTests.Features.VehicleMakes.Commands.CreateVe
                 .Callback<VehicleMake, CancellationToken>(
                     (vehicleMake, _) =>
                     {
-                        vehicleMake.Id = 1;
+                        createdVehicleMake = vehicleMake;
                     }
                 );
 
@@ -48,12 +50,18 @@ namespace CarRenta.Application.UnitTests.Features.VehicleMakes.Commands.CreateVe
 
             // Act
 
-            Result<int> result = await handler.Handle(command, CancellationToken.None);
+            Result<int> result = await handler.Handle(
+                command, 
+                CancellationToken.None);
 
             // Assert
 
             result.IsSuccess.Should().BeTrue();
-            result.Value.Should().Be(1);
+
+            createdVehicleMake.Should().NotBeNull();
+            createdVehicleMake!.Name.Should().Be(vehicleName);
+            createdVehicleMake.IsActive.Should().BeTrue();
+            createdVehicleMake!.Id.Should().BeGreaterThan(0);
 
             vehicleMakeDbSet.Verify(
                 x => x.AddAsync(
@@ -78,11 +86,7 @@ namespace CarRenta.Application.UnitTests.Features.VehicleMakes.Commands.CreateVe
 
             var vehicleMakes = new List<VehicleMake>()
             {
-                new VehicleMake
-                {
-                    Id = 1,
-                    Name = vehicleName
-                }
+                VehicleMake.Create(vehicleName)
             };
 
             var vehicleMakeDbSet = vehicleMakes.BuildMockDbSet();
@@ -118,7 +122,8 @@ namespace CarRenta.Application.UnitTests.Features.VehicleMakes.Commands.CreateVe
                 Times.Never);
 
             contextMock.Verify(
-                x => x.SaveChangesAsync(It.IsAny<CancellationToken>()),
+                x => x.SaveChangesAsync(
+                    It.IsAny<CancellationToken>()),
                 Times.Never);
         }
     }

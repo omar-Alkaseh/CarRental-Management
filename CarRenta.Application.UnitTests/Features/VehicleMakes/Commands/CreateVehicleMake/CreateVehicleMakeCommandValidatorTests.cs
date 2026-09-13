@@ -3,7 +3,7 @@ using FluentValidation.TestHelper;
 
 namespace CarRenta.Application.UnitTests.Features.VehicleMakes.Commands.CreateVehicleMake
 {
-    public class CreateVehicleMakeValidatorTests
+    public class CreateVehicleMakeCommandValidatorTests
     {
         [Theory]
         [InlineData("")]

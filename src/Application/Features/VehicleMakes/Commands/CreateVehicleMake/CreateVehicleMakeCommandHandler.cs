@@ -19,12 +19,11 @@ namespace CarRental.Application.Features.VehicleMakes.Commands.CreateVehicleMake
             if (exists)
                 return VehicleMakeErrors.NameAlreadyExists;
 
-            var vehicleMake = new VehicleMake
-            {
-                Name = request.Name
-            };
+            var vehicleMake = VehicleMake.Create(request.Name);
 
-            await context.VehicleMakes.AddAsync(vehicleMake, cancellationToken);
+            await context.VehicleMakes.AddAsync(
+                vehicleMake,
+                cancellationToken);
 
             await context.SaveChangesAsync(cancellationToken);
 

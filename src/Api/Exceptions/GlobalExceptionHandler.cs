@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using CarRental.Domain.Common.Exceptions;
+using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +20,15 @@ namespace CarRental.Api.Exceptions
                             g => g.Select(x => x.ErrorMessage).ToArray()))
                     {
                         Title = "Validation Failed",
+                        Detail = "One or more validation errors occurred.",
+                        Status = StatusCodes.Status400BadRequest
+                    },
+
+                DomainException ex =>
+                    new ProblemDetails
+                    {
+                        Title = "Domain Rule Error",
+                        Detail = ex.Message,
                         Status = StatusCodes.Status400BadRequest
                     },
 
@@ -34,13 +44,31 @@ namespace CarRental.Api.Exceptions
             httpContext.Response.StatusCode = 
                 problem.Status ?? StatusCodes.Status500InternalServerError;
 
-            await problemDetailsService.WriteAsync(
-                new ProblemDetailsContext 
-                { 
-                    HttpContext = httpContext,
-                    ProblemDetails = problem
-                });
+            var context = new ProblemDetailsContext
+            {
+                HttpContext = httpContext,
+                ProblemDetails = problem
+            };
 
+            
+            var written = 
+                await problemDetailsService.TryWriteAsync(context);
+
+            if(!written)
+            {
+                if (problem is ValidationProblemDetails validationProblem)
+                {
+                    await httpContext.Response.WriteAsJsonAsync(
+                        validationProblem,
+                        cancellationToken);
+                }
+                else
+                {
+                    await httpContext.Response.WriteAsJsonAsync(
+                        problem,
+                        cancellationToken);
+                }
+            }
             return true;
         }
     }

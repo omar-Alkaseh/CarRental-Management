@@ -20,13 +20,14 @@ public sealed class UpdateVehicleMakeCommandHandler(ICarRentalDbContext context)
             return VehicleMakeErrors.NotFound(request.Id);
 
         bool nameExists = await context.VehicleMakes.
-            AnyAsync(v => v.Name == request.Name &&
-                        v.Id != request.Id, cancellationToken);
+            AnyAsync(
+                    v => v.Name == request.Name &&
+                    v.Id != request.Id, cancellationToken);
 
         if (nameExists)
             return VehicleMakeErrors.NameAlreadyExists;
 
-        vehicleMake.Name = request.Name;
+        vehicleMake.ChangeName(request.Name);
 
         await context.SaveChangesAsync(cancellationToken);
 

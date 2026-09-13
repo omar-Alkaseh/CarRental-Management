@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Car_Rental_Management.Comman.Filters
+namespace Car_Rental_Management.Common.Filters
 {
     public sealed class ResultActionFilter : IAsyncActionFilter
     {
@@ -26,7 +26,7 @@ namespace Car_Rental_Management.Comman.Filters
                 return;
             }
 
-            var error = result.Error!;
+            var error = result.Error;
 
             var statusCode = error.Type switch
             {
