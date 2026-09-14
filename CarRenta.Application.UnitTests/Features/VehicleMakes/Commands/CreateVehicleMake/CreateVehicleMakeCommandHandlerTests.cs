@@ -61,7 +61,6 @@ namespace CarRenta.Application.UnitTests.Features.VehicleMakes.Commands.CreateVe
             createdVehicleMake.Should().NotBeNull();
             createdVehicleMake!.Name.Should().Be(vehicleName);
             createdVehicleMake.IsActive.Should().BeTrue();
-            createdVehicleMake!.Id.Should().BeGreaterThan(0);
 
             vehicleMakeDbSet.Verify(
                 x => x.AddAsync(

@@ -9,33 +9,10 @@ using MockQueryable.Moq;
 using Moq;
 using System.Runtime.InteropServices;
 
-namespace CarRenta.Application.UnitTests.Features.VehicleMakes.Commands.CreateVehicleMake.UpdateVehicleMake
+namespace CarRenta.Application.UnitTests.Features.VehicleMakes.Commands.UpdateVehicleMake
 {
     public class UpdateVehicleMakeCommandHandlerTests
     {
-        //public async Task<Result<VehicleMakeDto>> Handle(UpdateVehicleMakeCommand request, CancellationToken cancellationToken)
-        //{
-        //    var vehicleMake = await context.VehicleMakes.
-        //        FirstOrDefaultAsync(v => v.Id == request.Id, cancellationToken);
-
-        //    if (vehicleMake is null)
-        //        return VehicleMakeErrors.NotFound(request.Id);
-
-        //    bool nameExists = await context.VehicleMakes.
-        //        AnyAsync(
-        //                v => v.Name == request.Name &&
-        //                v.Id != request.Id, cancellationToken);
-
-        //    if (nameExists)
-        //        return VehicleMakeErrors.NameAlreadyExists;
-
-        //    vehicleMake.ChangeName(request.Name);
-
-        //    await context.SaveChangesAsync(cancellationToken);
-
-        //    return Result<VehicleMakeDto>.Success(vehicleMake.ToDto());
-        //}
-
         [Fact]
         public async Task Handle_WhenVehicleMakeIdDoesNotExist_ShouldReturnNotFoundError()
         {
@@ -170,6 +147,55 @@ namespace CarRenta.Application.UnitTests.Features.VehicleMakes.Commands.CreateVe
                 v => v.SaveChangesAsync(It.IsAny<CancellationToken>()),
                 Times.Once);
         }
+
+
+
+        [Fact]
+        public async Task Handle_WhenNameBelongsToSameVehicleMake_ShouldSucceed()
+        {
+            // Arrange
+
+            var vehicleMakeId = 3;
+            var vehicleMakeName = "Kia";
+
+            var vehicleMakes = new List<VehicleMake>()
+            {
+                CreateVehicleMake(vehicleMakeId, vehicleMakeName),
+                CreateVehicleMake(4, "Toyota")
+            };
+
+            var vehicleMakeDbSet = vehicleMakes.BuildMockDbSet();
+
+            var contextMock = new Mock<ICarRentalDbContext>();
+
+            contextMock
+                .Setup(x => x.VehicleMakes)
+                .Returns(vehicleMakeDbSet.Object);
+
+            var handler = new UpdateVehicleMakeCommandHandler(contextMock.Object);
+
+            var command = new UpdateVehicleMakeCommand(
+                Id: vehicleMakeId,
+                Name: vehicleMakeName);
+
+            // Act
+
+            var result = await handler.Handle(
+                command,
+                CancellationToken.None);
+
+            // Assert
+
+            result.IsSuccess.Should().BeTrue();
+            result.Value.Should().NotBeNull();
+            result.Value.Id.Should().Be(vehicleMakeId);
+            result.Value!.Name.Should().Be(vehicleMakeName);
+
+            contextMock.Verify(
+                x => x.SaveChangesAsync(It.IsAny<CancellationToken>()),
+                Times.Once());
+        }
+
 
 
         private static VehicleMake CreateVehicleMake(int id, string name)
