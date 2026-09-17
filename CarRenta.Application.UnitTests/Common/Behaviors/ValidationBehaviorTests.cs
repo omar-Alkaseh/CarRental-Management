@@ -4,7 +4,7 @@ using FluentAssertions;
 using FluentValidation;
 using MediatR;
 
-namespace CarRenta.Application.UnitTests.Common.Behaviors
+namespace CarRental.Application.UnitTests.Common.Behaviors
 {
     public class ValidationBehaviorTests
     {
