@@ -107,5 +107,26 @@ namespace Car_Rental_Management.Features.VehicleMakes
             
             return Ok(result.Map(dto => dto.ToResponse()));
         }
+
+
+
+
+        [HttpHead("{id:int}")]
+        public IActionResult Head(int id)
+        {
+
+        }
+
+
+
+        [HttpOptions]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public IActionResult Options()
+        {
+            Response.Headers["Allow"] =
+                "GET, POST, PUT, DELETE, HEAD, OPTIONS";
+
+            return NoContent();
+        }
     }
 }
