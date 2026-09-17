@@ -109,16 +109,6 @@ namespace Car_Rental_Management.Features.VehicleMakes
         }
 
 
-
-
-        [HttpHead("{id:int}")]
-        public IActionResult Head(int id)
-        {
-
-        }
-
-
-
         [HttpOptions]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult Options()
