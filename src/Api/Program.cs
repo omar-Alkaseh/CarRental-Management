@@ -1,6 +1,7 @@
 using Car_Rental_Management.Common.Filters;
 using CarRental.Api.Exceptions;
 using CarRental.Application;
+using CarRental.Application.Common.Results;
 using CarRental.Infrastructure;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
@@ -63,5 +64,23 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapGet("/authors/{author}", async (string author, HttpContext context) =>
+{
+   var data = new
+   {
+       Id = context.TraceIdentifier,
+       Scheme = context.Request.Scheme,
+       Host = context.Request.Host,
+       Method = context.Request.Method,
+       Path = context.Request.Path,
+       Query = context.Request.Query,
+       Headers = context.Request.Headers,
+       RouteValues = context.Request.RouteValues,
+       Body = await new StreamReader(context.Request.Body).ReadToEndAsync()
+   };
+
+   return Results.Ok(data);
+});
 
 app.Run();
