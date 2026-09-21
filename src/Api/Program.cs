@@ -1,7 +1,6 @@
 using Car_Rental_Management.Common.Filters;
 using CarRental.Api.Exceptions;
 using CarRental.Application;
-using CarRental.Application.Common.Results;
 using CarRental.Infrastructure;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
