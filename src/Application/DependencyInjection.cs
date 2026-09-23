@@ -1,9 +1,7 @@
 ﻿using CarRental.Application.Common.Behaviors;
 using FluentValidation;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace CarRental.Application
-{
+namespace Microsoft.Extensions.DependencyInjection;
     public static class DependencyInjection 
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
@@ -24,4 +22,3 @@ namespace CarRental.Application
             return services;
         }
     }
-}
