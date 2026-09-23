@@ -42,8 +42,8 @@ builder.Services.AddProblemDetails();
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
-builder.Services.AddApplication();
-builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructureServices(builder.Configuration);
 
 var app = builder.Build();
 
@@ -63,23 +63,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.MapGet("/authors/{author}", async (string author, HttpContext context) =>
-{
-   var data = new
-   {
-       Id = context.TraceIdentifier,
-       Scheme = context.Request.Scheme,
-       Host = context.Request.Host,
-       Method = context.Request.Method,
-       Path = context.Request.Path,
-       Query = context.Request.Query,
-       Headers = context.Request.Headers,
-       RouteValues = context.Request.RouteValues,
-       Body = await new StreamReader(context.Request.Body).ReadToEndAsync()
-   };
-
-   return Results.Ok(data);
-});
 
 app.Run();

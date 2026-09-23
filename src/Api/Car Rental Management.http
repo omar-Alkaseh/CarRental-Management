@@ -3,14 +3,3 @@
 GET {{Car_Rental_Management_HostAddress}}/weatherforecast/
 Accept: application/json
 
-### Get authors
-
-
-Get https://localhost:7283/authors/omar alkaseh?title=clean-code
-Content-Type: application/json
-x-API-Version: v1.5
-
-{
-    "name": "omar",
-    "age": 22
-}
