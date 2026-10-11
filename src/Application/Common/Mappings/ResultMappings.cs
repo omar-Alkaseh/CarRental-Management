@@ -9,7 +9,7 @@ public static class ResultMappings
         Func<TSource, TDestination> mapper)
     {
         if (result.IsFailure)
-            return result.Error!;
+            return result.Error;
 
         return Result<TDestination>.Success(
             mapper(result.Value!));

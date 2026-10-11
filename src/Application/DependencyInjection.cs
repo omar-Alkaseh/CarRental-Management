@@ -1,12 +1,10 @@
 ﻿using CarRental.Application.Common.Behaviors;
 using FluentValidation;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace CarRental.Application
-{
+namespace Microsoft.Extensions.DependencyInjection;
     public static class DependencyInjection 
     {
-        public static IServiceCollection AddApplication(this IServiceCollection services)
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddMediatR(config =>
             {
@@ -24,4 +22,3 @@ namespace CarRental.Application
             return services;
         }
     }
-}

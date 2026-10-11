@@ -6,6 +6,7 @@ using CarRental.Domain.Identity.Entities;
 using CarRental.Domain.Operations.Entities;
 using CarRental.Domain.Rentals.Entities;
 using CarRental.Application.Common.Interfaces;
+using CarRental.Domain.Customers.Entities;
 
 namespace CarRental.Infrastructure.Data;
 

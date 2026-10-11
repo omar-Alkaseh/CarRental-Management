@@ -1,7 +1,7 @@
 ﻿using CarRental.Domain.Identity.Entities;
 using CarRental.Domain.Rentals.Entities;
 
-namespace CarRental.Domain.Core.Entities;
+namespace CarRental.Domain.Customers.Entities;
 
 public partial class Customer
 {
