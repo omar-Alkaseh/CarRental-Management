@@ -4,17 +4,21 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Car_Rental_Management.Common.Filters
 {
-    public sealed class ResultActionFilter : IAsyncActionFilter
+    public sealed class ResultActionFilter : IAsyncResultFilter
     {
-        public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
         {
-            var executedContext = await next();
-
-            if (executedContext.Result is not ObjectResult objectResult)
+            if (context.Result is not ObjectResult objectResult)
+            {
+                await next();
                 return;
+            }
 
             if (objectResult.Value is not Result result)
+            {
+                await next();
                 return;
+            }
 
             if (result.IsSuccess)
             {
@@ -22,7 +26,7 @@ namespace Car_Rental_Management.Common.Filters
                 {
                     objectResult.Value = resultValue.Value;
                 }
-
+                await next();
                 return;
             }
 
@@ -40,18 +44,18 @@ namespace Car_Rental_Management.Common.Filters
                 _ => StatusCodes.Status500InternalServerError
             };
 
-            executedContext.Result = new ObjectResult(
+            context.Result = new ObjectResult(
                 new ProblemDetails
                 {
                     Title = error.Code,
                     Detail = error.Message,
-                    Status = statusCode
-
+                    Status = statusCode,
                 })
             {
                 StatusCode = statusCode
             };
 
+            await next();
         }
     }
 }
