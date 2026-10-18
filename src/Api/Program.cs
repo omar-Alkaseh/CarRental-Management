@@ -38,7 +38,15 @@ builder.Services.AddSwaggerGen(options =>
     options.IncludeXmlComments(xmlPath);
 });
 
-builder.Services.AddProblemDetails();
+builder.Services.AddProblemDetails(options =>
+{
+    options.CustomizeProblemDetails = (context) =>
+    {
+        context.ProblemDetails.Instance = $"{context.HttpContext.Request.Method} {context.HttpContext.Request.Path}";
+        context.ProblemDetails.Extensions.Add("requestId", context.HttpContext.TraceIdentifier);
+    };
+
+});
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
