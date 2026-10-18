@@ -10,8 +10,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Car_Rental_Management.Features.VehicleMakes
 {
-    [Route("api/Vehicle-Makes")]
+    
     [ApiController]
+    [Route("api/Vehicle-Makes")]
+    [Produces("application/json")]
     public sealed class VehicleMakesController(ISender sender) : ControllerBase
     {
         /// <summary>
