@@ -2,6 +2,8 @@ using Car_Rental_Management.Common.Filters;
 using CarRental.Api.Exceptions;
 using CarRental.Application;
 using CarRental.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 
@@ -52,6 +54,14 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
+
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions = true;
+    options.ApiVersionReader = new MediaTypeApiVersionReader("v");
+});
 
 var app = builder.Build();
 
