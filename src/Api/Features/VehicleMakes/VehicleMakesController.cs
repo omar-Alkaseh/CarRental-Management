@@ -11,9 +11,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace Car_Rental_Management.Features.VehicleMakes
 {
     [ApiController]
-     [ApiVersion("1.0")]
+    [ApiVersion("1.0")]
     [Route("api/Vehicle-Makes")]
-    [Produces("application/json")]
+    [Tags("Vehicle-Make")]
     public sealed class VehicleMakesController(ISender sender) : ControllerBase
     {
         /// <summary>
