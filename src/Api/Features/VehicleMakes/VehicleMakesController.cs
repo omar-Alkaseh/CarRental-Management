@@ -40,14 +40,19 @@ namespace Car_Rental_Management.Features.VehicleMakes
         /// A vehicle make with the same name already exists.
         /// </response>
         [HttpPost]
+        [MapToApiVersion("1.0")]
+        [Consumes("application/json")]
         [ProducesResponseType(
             typeof(VehicleMakeResponse),
             StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)] 
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status409Conflict)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType<ProblemDetails>(StatusCodes.Status400BadRequest)] 
+        [ProducesResponseType<ProblemDetails>(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType<ProblemDetails>(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType<ProblemDetails>(StatusCodes.Status409Conflict)]
+        [ProducesResponseType<ProblemDetails>(StatusCodes.Status500InternalServerError)]
+        [EndpointName("CreateVehicleMake")]
+        [EndpointSummary("Create a new Vehicle Make")]
+        [EndpointDescription("Creates a new vehicle manufacturer such as Toyota, BMW or Mercedes-Benz.")]
         public async Task<IActionResult> Create(
             CreateVehicleMakeRequest request,
             CancellationToken cancellationToken)
@@ -88,16 +93,18 @@ namespace Car_Rental_Management.Features.VehicleMakes
         /// </response>
 
         [HttpPut("{Id:int}")]
-        
+        [MapToApiVersion("1.0")]
         [ProducesResponseType(
             typeof(VehicleMakeResponse),
             StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status409Conflict)]
-
+        [ProducesResponseType<ProblemDetails>(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType<ProblemDetails>(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType<ProblemDetails>(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType<ProblemDetails>(StatusCodes.Status404NotFound)]
+        [ProducesResponseType<ProblemDetails>(StatusCodes.Status409Conflict)]
+        [EndpointName("UpdateVehicleMake")]
+        [EndpointSummary("Update an existing vehicle make")]
+        [EndpointDescription("Updated vehicle make information")]
         public async Task<IActionResult> Update(
             int Id,
             UpdateVehicleMakeRequest request,
