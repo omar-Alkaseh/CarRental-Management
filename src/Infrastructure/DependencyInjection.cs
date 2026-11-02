@@ -1,4 +1,5 @@
 ﻿using CarRental.Application.Common.Interfaces;
+using CarRental.Infrastructure.Auth;
 using CarRental.Infrastructure.Data;
 using CarRental.Infrastructure.Persistence.Options;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +30,12 @@ namespace Microsoft.Extensions.DependencyInjection;
 
             services.AddScoped<ICarRentalDbContext, CarRentalDbContext>();
 
+            services.AddScoped<IJwtTokenProvider, JwtTokenProvider>();
+
+            services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
+
+            services.AddScoped<IRefreshTokenGenerator, RefreshTokenGenerator>();
+            
             return services;
         }
     }

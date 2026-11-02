@@ -29,7 +29,7 @@ public sealed partial class User
 
     public byte[] RowVersion { get; private set; } = null!;
 
-    public IReadOnlyCollection<UserRole> userRoles =>
+    public IReadOnlyCollection<UserRole> UserRoles =>
         _userRole.AsReadOnly();
 
     public static User Create(
@@ -69,7 +69,7 @@ public sealed partial class User
         ArgumentException.ThrowIfNullOrWhiteSpace(lastName);
 
         FirstName = firstName.Trim();
-        LastName = LastName.Trim();
+        LastName = lastName.Trim();
         PhoneNumber = phoneNumber?.Trim();
         UpdatedAtUtc = nowUtc;
     }

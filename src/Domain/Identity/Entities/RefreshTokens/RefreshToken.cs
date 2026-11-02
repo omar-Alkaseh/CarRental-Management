@@ -37,7 +37,7 @@ public partial class RefreshToken
         if (jwtId == Guid.Empty)
             throw new DomainException("Invalid JWT ID.");
 
-        if (nowUtc <= expiresAtUtc)
+        if (nowUtc >= expiresAtUtc)
             throw new DomainException("Expiration must be in the future.");
 
         return new RefreshToken
@@ -70,7 +70,6 @@ public partial class RefreshToken
             throw new DomainException("Refresh token is not active.");
         
         ArgumentException.ThrowIfNullOrWhiteSpace(reason);
-
         
         RevokedAtUtc = nowUtc;
         RevokedByIp = revokedByIp;
