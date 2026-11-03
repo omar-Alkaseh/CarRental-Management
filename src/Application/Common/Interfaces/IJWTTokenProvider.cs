@@ -5,5 +5,5 @@ namespace CarRental.Application.Common.Interfaces;
 
 public interface IJwtTokenProvider
 {
-    TokenResult GenerateToken(User user);
+    AccessTokenResult GenerateToken(User user);
 }

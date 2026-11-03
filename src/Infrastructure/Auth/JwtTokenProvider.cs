@@ -6,16 +6,14 @@ using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using CarRental.Infrastructure.Auth.Settings;
 namespace CarRental.Infrastructure.Auth;
 
-public class JwtTokenProvider(IOptions<JwtSettings> options,
-    IRefreshTokenGenerator refreshTokenGenerator) : IJwtTokenProvider
+public class JwtTokenProvider(IOptions<JwtSettings> options) : IJwtTokenProvider
 {
     private readonly JwtSettings _settings = options.Value;
 
-    private readonly IRefreshTokenGenerator _refreshTokenGenerator = refreshTokenGenerator;
-
-    public TokenResult GenerateToken(User user)
+    public AccessTokenResult GenerateToken(User user)
     {
         var issuer = _settings.Issuer;
         var audience = _settings.Audience;
@@ -51,12 +49,9 @@ public class JwtTokenProvider(IOptions<JwtSettings> options,
 
         var securityToken = tokenHandler.CreateToken(descriptor);
 
-        var refreshToken = _refreshTokenGenerator.GenerateRefreshToken();
-
-        return new TokenResult
+        return new AccessTokenResult
         (
             tokenHandler.WriteToken(securityToken),
-            refreshToken,
             expires,
             jwtId
         );

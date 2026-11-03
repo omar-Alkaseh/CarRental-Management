@@ -1,4 +1,4 @@
-namespace CarRental.Infrastructure.Auth;
+namespace CarRental.Infrastructure.Auth.Settings;
 
 public sealed class JwtSettings
 {

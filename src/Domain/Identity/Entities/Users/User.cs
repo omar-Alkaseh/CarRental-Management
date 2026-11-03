@@ -135,19 +135,29 @@ public sealed partial class User
         if (IsLockedOut(nowUtc))
             return;
 
+        if (LockoutUntilUtc.HasValue &&
+            LockoutUntilUtc.Value <= nowUtc)
+            ResetLoginFailures();
+
         if (FailedLoginAttempts < short.MaxValue)
             FailedLoginAttempts ++;
 
         if (FailedLoginAttempts >= maxAttempts)
             LockoutUntilUtc = nowUtc.Add(lockoutDuration);
+
+        UpdatedAtUtc = nowUtc;
     }
 
     public void RecordSuccessfulLogin()
     {
+        ResetLoginFailures();
+    }
+
+    private void ResetLoginFailures()
+    {
         LockoutUntilUtc = null;
         FailedLoginAttempts = 0;
     }
-
     public void AssignRole(short roleId, DateTime nowUtc)
     {
         if (roleId <= 0)

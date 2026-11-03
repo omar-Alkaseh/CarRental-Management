@@ -1,8 +1,7 @@
 using Car_Rental_Management.Common.Filters;
 using CarRental.Api.Exceptions;
-using CarRental.Application;
-using CarRental.Infrastructure;
-using CarRental.Infrastructure.Auth;
+using CarRental.Application.Common.Security;
+using CarRental.Infrastructure.Auth.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
@@ -58,6 +57,13 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
+
+builder.Services
+    .AddOptions<RefreshTokenSettings>()
+    .Bind(builder.Configuration.GetSection(RefreshTokenSettings.SectionName))
+    .Validate(settings => settings.ExpirationInDays > 0, 
+        "Refresh token expiration must be greater than zero.")
+    .ValidateOnStart();
 
 builder.Services.AddAuthentication(options =>
 {

@@ -1,4 +1,5 @@
 ﻿using CarRental.Domain.Fleet.Entities;
+using CarRental.Domain.Identity.Entities.RefreshTokens;
 using CarRental.Domain.Identity.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,8 @@ namespace CarRental.Application.Common.Interfaces
         DbSet<VehicleMake> VehicleMakes { get; }
 
         DbSet<User> Users { get; }
+
+        DbSet<RefreshToken> RefreshTokens { get; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }

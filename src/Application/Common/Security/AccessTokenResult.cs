@@ -1,8 +1,7 @@
 namespace CarRental.Application.Common.Security;
 
-public sealed record TokenResult(
+public sealed record AccessTokenResult(
     string AccessToken,
-    string RefreshToken,
     DateTime ExpiresAtUtc,
     Guid JwtId
 );
