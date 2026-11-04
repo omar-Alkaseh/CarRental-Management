@@ -1,6 +1,10 @@
 ﻿using CarRental.Application.Common.Interfaces;
+using CarRental.Domain.Identity.Entities.Users;
+using CarRental.Infrastructure.Auth;
+using CarRental.Infrastructure.Auth.Settings;
 using CarRental.Infrastructure.Data;
 using CarRental.Infrastructure.Persistence.Options;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -28,6 +32,18 @@ namespace Microsoft.Extensions.DependencyInjection;
             });
 
             services.AddScoped<ICarRentalDbContext, CarRentalDbContext>();
+
+            services.AddScoped<IJwtTokenProvider, JwtTokenProvider>();
+
+            services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
+
+            services.AddScoped<IRefreshTokenGenerator, RefreshTokenGenerator>();
+            
+            services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+            
+            services.AddScoped<IPasswordHasherService, PasswordHasherService>();
+
+            services.AddScoped<IRefreshTokenHasher, RefreshTokenHasher>();
 
             return services;
         }

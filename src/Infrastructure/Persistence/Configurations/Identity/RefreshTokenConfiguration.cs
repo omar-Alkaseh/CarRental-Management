@@ -1,4 +1,5 @@
-﻿using CarRental.Domain.Identity.Entities;
+﻿using CarRental.Domain.Identity.Entities.RefreshTokens;
+using CarRental.Domain.Identity.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -35,7 +36,8 @@ namespace CarRental.Infrastructure.Data.Configurations.Identity
                 .IsUnicode(false)
                 .IsFixedLength();
 
-            builder.HasOne(d => d.User).WithMany(p => p.RefreshTokens)
+            builder.HasOne<User>()
+                .WithMany()
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_RefreshTokens_Users");

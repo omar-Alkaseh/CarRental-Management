@@ -1,4 +1,4 @@
-﻿using CarRental.Domain.Identity.Entities;
+﻿using CarRental.Domain.Identity.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -27,6 +27,10 @@ namespace CarRental.Infrastructure.Data.Configurations.Identity
                 .IsRowVersion()
                 .IsConcurrencyToken();
             builder.Property(e => e.UpdatedAtUtc).HasPrecision(0);
+
+            builder.Navigation(u => u.UserRoles)
+            .HasField("_userRole")
+            .UsePropertyAccessMode(PropertyAccessMode.Field);
         }
     }
 }

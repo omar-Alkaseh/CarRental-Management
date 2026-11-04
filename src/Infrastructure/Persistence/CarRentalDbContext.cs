@@ -7,6 +7,9 @@ using CarRental.Domain.Operations.Entities;
 using CarRental.Domain.Rentals.Entities;
 using CarRental.Application.Common.Interfaces;
 using CarRental.Domain.Customers.Entities;
+using CarRental.Domain.Identity.Entities.RefreshTokens;
+using CarRental.Domain.Identity.Entities.Roles;
+using CarRental.Domain.Identity.Entities.Users;
 
 namespace CarRental.Infrastructure.Data;
 
