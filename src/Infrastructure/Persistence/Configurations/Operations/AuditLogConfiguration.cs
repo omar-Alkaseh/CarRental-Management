@@ -27,7 +27,7 @@ namespace CarRental.Infrastructure.Data.Configurations.Operations
                 .HasDefaultValueSql("(sysutcdatetime())");
             builder.Property(e => e.UserAgent).HasMaxLength(500);
 
-            builder.HasOne(d => d.User).WithMany(p => p.AuditLogs)
+            builder.HasOne(d => d.User).WithMany()
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("FK_AuditLogs_Users");

@@ -1,4 +1,4 @@
-﻿using CarRental.Domain.Identity.Entities;
+﻿using CarRental.Domain.Identity.Entities.Users;
 using CarRental.Domain.Rentals.Entities;
 
 namespace CarRental.Domain.Customers.Entities;

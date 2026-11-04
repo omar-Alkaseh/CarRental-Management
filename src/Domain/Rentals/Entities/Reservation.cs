@@ -2,7 +2,7 @@
 using CarRental.Domain.Core.Entities;
 using CarRental.Domain.Customers.Entities;
 using CarRental.Domain.Fleet.Entities;
-using CarRental.Domain.Identity.Entities;
+using CarRental.Domain.Identity.Entities.Users;
 using CarRental.Domain.Rentals.Enums;
 
 namespace CarRental.Domain.Rentals.Entities;

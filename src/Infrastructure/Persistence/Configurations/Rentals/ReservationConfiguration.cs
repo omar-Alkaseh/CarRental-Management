@@ -51,7 +51,7 @@ namespace CarRental.Infrastructure.Data.Configurations.Rentals
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("FK_Reservations_AssignedVehicles");
 
-            builder.HasOne(d => d.CancelledByUser).WithMany(p => p.Reservations)
+            builder.HasOne(d => d.CancelledByUser).WithMany()
                 .HasForeignKey(d => d.CancelledByUserId)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("FK_Reservations_CancelledByUsers");

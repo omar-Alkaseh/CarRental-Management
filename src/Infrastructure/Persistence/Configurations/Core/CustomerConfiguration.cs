@@ -34,7 +34,7 @@ namespace CarRental.Infrastructure.Data.Configurations.Core
                 .IsConcurrencyToken();
             builder.Property(e => e.UpdatedAtUtc).HasPrecision(0);
 
-            builder.HasOne(d => d.User).WithOne(p => p.Customer)
+            builder.HasOne(d => d.User).WithOne()
                 .HasForeignKey<Customer>(d => d.UserId)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("FK_Customers_Users");

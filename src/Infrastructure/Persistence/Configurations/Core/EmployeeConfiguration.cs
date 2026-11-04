@@ -34,7 +34,7 @@ namespace CarRental.Infrastructure.Data.Configurations.Core
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("FK_Employees_Branches");
 
-            builder.HasOne(d => d.User).WithOne(p => p.Employee)
+            builder.HasOne(d => d.User).WithOne()
                 .HasForeignKey<Employee>(d => d.UserId)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("FK_Employees_Users");

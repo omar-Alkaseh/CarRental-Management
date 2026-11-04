@@ -18,7 +18,7 @@ public class JwtTokenProvider(IOptions<JwtSettings> options) : IJwtTokenProvider
         var issuer = _settings.Issuer;
         var audience = _settings.Audience;
         var expires = DateTime.UtcNow.AddMinutes(_settings.TokenExpirationInMinutes);
-        var key = _settings.Key;
+        var key = _settings.SecretKey;
         var jwtId = Guid.NewGuid();
 
         var claims = new List<Claim>
