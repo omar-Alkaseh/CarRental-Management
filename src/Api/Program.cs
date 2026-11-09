@@ -44,9 +44,11 @@ builder.Services.AddSwaggerGen(options =>
     options.IncludeXmlComments(xmlPath);
 });
 
-builder.Services.AddOpenApi(options =>
+foreach (var version in VersioningConstant.Versions)
 {
-    foreach (var version in VersioningConstant.Versions)
+    var documentName = version.ToString();
+
+    builder.Services.AddOpenApi(documentName, options =>
     {
         // versioning config
         options.AddDocumentTransformer<VersionInfoTransformer>();
@@ -54,9 +56,8 @@ builder.Services.AddOpenApi(options =>
         // versioning security scheme
         options.AddDocumentTransformer<BearerSecuritySchemeTransformer>();
         options.AddOperationTransformer<BearerSecuritySchemeTransformer>();
-    }
-
-});
+    });
+}
 
 builder.Services.AddProblemDetails(options =>
 {
@@ -118,8 +119,20 @@ app.UseStatusCodePages();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.MapOpenApi();
+
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        foreach (var version in VersioningConstant.Versions)
+        {
+            var documentName = version.ToString();
+
+            options.SwaggerEndpoint(
+                $"/openapi/{documentName}.json",
+                $"CarRental API {documentName}");
+        }
+    });
 }
 
 app.UseHttpsRedirection();
@@ -129,10 +142,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
 
 app.Run();
