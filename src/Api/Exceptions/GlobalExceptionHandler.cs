@@ -44,32 +44,13 @@ namespace CarRental.Api.Exceptions
             httpContext.Response.StatusCode = 
                 problem.Status ?? StatusCodes.Status500InternalServerError;
 
-            var context = new ProblemDetailsContext
+
+            return await problemDetailsService.TryWriteAsync(new ProblemDetailsContext
             {
                 HttpContext = httpContext,
+                Exception = exception,
                 ProblemDetails = problem
-            };
-
-            
-            var written = 
-                await problemDetailsService.TryWriteAsync(context);
-
-            if(!written)
-            {
-                if (problem is ValidationProblemDetails validationProblem)
-                {
-                    await httpContext.Response.WriteAsJsonAsync(
-                        validationProblem,
-                        cancellationToken);
-                }
-                else
-                {
-                    await httpContext.Response.WriteAsJsonAsync(
-                        problem,
-                        cancellationToken);
-                }
-            }
-            return true;
+            });
         }
     }
 }

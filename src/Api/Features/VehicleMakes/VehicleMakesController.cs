@@ -14,6 +14,7 @@ namespace Car_Rental_Management.Features.VehicleMakes
     [ApiVersion("1.0")]
     [Route("api/Vehicle-Makes")]
     [Tags("Vehicle-Make")]
+    [Produces("application/json")]
     public sealed class VehicleMakesController(ISender sender) : ControllerBase
     {
         /// <summary>
@@ -117,9 +118,13 @@ namespace Car_Rental_Management.Features.VehicleMakes
             return Ok(result.Map(dto => dto.ToResponse()));
         }
 
-
         [HttpOptions]
+        [MapToApiVersion("1.0")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType<ProblemDetails>(StatusCodes.Status500InternalServerError)]
+        [EndpointName("Options")]
+        [EndpointSummary("Get allow options")]
+        [EndpointDescription("Get allow options of vehicle make controller")]
         public IActionResult Options()
         {
             Response.Headers["Allow"] =

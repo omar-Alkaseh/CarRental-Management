@@ -1,4 +1,5 @@
-﻿using CarRental.Application.Common.Results;
+﻿using System.Diagnostics;
+using CarRental.Application.Common.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -44,15 +45,28 @@ namespace Car_Rental_Management.Common.Filters
                 _ => StatusCodes.Status500InternalServerError
             };
 
-            context.Result = new ObjectResult(
-                new ProblemDetails
-                {
-                    Title = error.Code,
-                    Detail = error.Message,
-                    Status = statusCode,
-                })
+            var problem = new ProblemDetails
             {
-                StatusCode = statusCode
+                Status = statusCode,
+                Title = "Request failed",
+                Detail = statusCode == StatusCodes.Status500InternalServerError 
+                    ? "An unexpected error occurred."
+                    : error.Message,
+                Instance = context.HttpContext.Request.Path
+            };
+
+            problem.Extensions["code"] = error.Code;
+
+            problem.Extensions["traceId"] =
+                Activity.Current?.Id ?? context.HttpContext.TraceIdentifier;
+
+            problem.Extensions["requestId"] =
+                context.HttpContext.TraceIdentifier;
+
+            context.Result = new ObjectResult(problem)
+            {
+                StatusCode = statusCode,
+                ContentTypes = {"application/problem+json"}
             };
 
             await next();
