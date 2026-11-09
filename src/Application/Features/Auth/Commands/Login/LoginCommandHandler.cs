@@ -33,7 +33,7 @@ public sealed class LoginCommandHandler(
         if (user is null)
             return AuthErrors.InvalidCredentials();
 
-        if (!passwordHasher.VerifyPassword(user, request.Password))
+        if (!passwordHasher.VerifyPassword(user.PasswordHash, request.Password))
         {
             if (user.IsActive && !user.IsLockedOut(now))
             {
@@ -66,7 +66,7 @@ public sealed class LoginCommandHandler(
             token.JwtId,
             now,
             refreshTokenExpiresAt,
-            null
+            request.RevokeByIp
         );
 
         await context.RefreshTokens.AddAsync(newRefreshToken, cancellationToken);

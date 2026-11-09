@@ -8,6 +8,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using CarRental.Application.Common.Security;
+using CarRental.Application.Common.Constant;
 
 namespace CarRental.Application.Features.Auth.Commands.RefreshToken;
 
@@ -62,13 +63,13 @@ public sealed class RefreshTokenCommandHandler(
             token.JwtId,
             now,
             refreshTokenExpiresAt,
-            null
+            request.RevokeByIp
         );
 
         oldRefreshToken.Revoke(
             now,
-            "Refresh token rotated.",
-            null,
+            RefreshTokenRevocationReasons.Rotated,
+            request.RevokeByIp,
             newRefreshToken.TokenHash
         );
 

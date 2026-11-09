@@ -4,19 +4,19 @@ using Microsoft.AspNetCore.Identity;
 
 namespace CarRental.Infrastructure.Auth;
 
-public sealed class PasswordHasherService(IPasswordHasher<User> passwordHasher) :
-    IPasswordHasherService
+public sealed class PasswordHasherService : IPasswordHasherService
 {
-    public string HashPassword(User user, string password)
+    private readonly PasswordHasher<object> _hasher = new();
+    public string HashPassword(string password)
     {
-        return passwordHasher.HashPassword(user, password);
+        return _hasher.HashPassword(new(), password);
     }
 
-    public bool VerifyPassword(User user, string password)
+    public bool VerifyPassword(string hashPassword, string password)
     {
-        var result = passwordHasher.VerifyHashedPassword(
-            user,
-            user.PasswordHash,
+        var result = _hasher.VerifyHashedPassword(
+            new(),
+            hashPassword,
             password);
 
         return result != PasswordVerificationResult.Failed;

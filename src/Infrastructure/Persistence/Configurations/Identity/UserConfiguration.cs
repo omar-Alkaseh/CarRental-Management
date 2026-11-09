@@ -24,8 +24,7 @@ namespace CarRental.Infrastructure.Data.Configurations.Identity
             builder.Property(e => e.PasswordHash).HasMaxLength(500);
             builder.Property(e => e.PhoneNumber).HasMaxLength(30);
             builder.Property(e => e.RowVersion)
-                .IsRowVersion()
-                .IsConcurrencyToken();
+                .IsRowVersion();
             builder.Property(e => e.UpdatedAtUtc).HasPrecision(0);
 
             builder.Navigation(u => u.UserRoles)

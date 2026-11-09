@@ -31,4 +31,18 @@ public static class AuthErrors
             "Your account is temporarily locked. Please try again later.",
             ErrorType.Forbidden
         );
+
+    public static Error EmailAlreadyExists() =>
+        new(
+            "Auth.ExistEmail",
+            "This email already exist.",
+            ErrorType.Conflict
+        );
+
+    public static Error RoleIsNotFound() =>
+        new(
+            "Auth.RolesNotExist",
+            "This Role is not exist.",
+            ErrorType.NotFound
+        );
 }

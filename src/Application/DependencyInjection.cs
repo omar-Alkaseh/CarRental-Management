@@ -19,6 +19,8 @@ namespace Microsoft.Extensions.DependencyInjection;
             services.AddValidatorsFromAssembly(
                 typeof(DependencyInjection).Assembly);
 
+            services.AddSingleton(TimeProvider.System);
+
             return services;
         }
     }
