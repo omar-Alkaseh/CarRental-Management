@@ -6,13 +6,14 @@ using CarRental.Application.Features.VehicleMakes.Mappings;
 using CarRental.Application.Features.VehicleMakes.Requests;
 using CarRental.Application.Features.VehicleMakes.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Car_Rental_Management.Features.VehicleMakes
 {
     [ApiController]
     [ApiVersion("1.0")]
-    [Route("api/Vehicle-Makes")]
+    [Route("api/v1/Vehicle-Makes")]
     [Tags("Vehicle-Make")]
     [Produces("application/json")]
     public sealed class VehicleMakesController(ISender sender) : ControllerBase
@@ -40,6 +41,7 @@ namespace Car_Rental_Management.Features.VehicleMakes
         /// <response code="409">
         /// A vehicle make with the same name already exists.
         /// </response>
+        [Authorize]
         [HttpPost]
         [MapToApiVersion("1.0")]
         [Consumes("application/json")]
@@ -92,7 +94,7 @@ namespace Car_Rental_Management.Features.VehicleMakes
         /// <response code="409">
         /// Another vehicle make already uses the same name.
         /// </response>
-
+        [Authorize]
         [HttpPut("{Id:int}")]
         [MapToApiVersion("1.0")]
         [ProducesResponseType(
