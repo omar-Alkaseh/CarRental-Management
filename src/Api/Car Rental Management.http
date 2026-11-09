@@ -1,5 +1,7 @@
-@Car_Rental_Management_HostAddress = http://localhost:5246
+@Car_Rental_Management_HostAddress = https://localhost:7283
 
-GET {{Car_Rental_Management_HostAddress}}/weatherforecast/
-Accept: application/json
+
+
+###
+GET {{Car_Rental_Management_HostAddress}}/openapi/v1.json
 

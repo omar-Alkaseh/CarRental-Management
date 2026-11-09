@@ -1,4 +1,5 @@
 using Car_Rental_Management.Common.Filters;
+using Car_Rental_Management.OpenApi.Transformers;
 using CarRental.Api.Exceptions;
 using CarRental.Application.Common.Security;
 using CarRental.Infrastructure.Auth.Settings;
@@ -41,6 +42,20 @@ builder.Services.AddSwaggerGen(options =>
         Path.Combine(AppContext.BaseDirectory, xmlFile);
 
     options.IncludeXmlComments(xmlPath);
+});
+
+builder.Services.AddOpenApi(options =>
+{
+    foreach (var version in VersioningConstant.Versions)
+    {
+        // versioning config
+        options.AddDocumentTransformer<VersionInfoTransformer>();
+
+        // versioning security scheme
+        options.AddDocumentTransformer<BearerSecuritySchemeTransformer>();
+        options.AddOperationTransformer<BearerSecuritySchemeTransformer>();
+    }
+
 });
 
 builder.Services.AddProblemDetails(options =>
@@ -114,5 +129,10 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi();
+}
 
 app.Run();
