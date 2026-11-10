@@ -1,4 +1,5 @@
-﻿using Car_Rental_Management.Features.VehicleMakes.Requests;
+﻿using Car_Rental_Management.Common.Constant;
+using Car_Rental_Management.Features.VehicleMakes.Requests;
 using CarRental.Application.Common.Mappings;
 using CarRental.Application.Features.VehicleMakes.Commands.CreateVehicleMakes;
 using CarRental.Application.Features.VehicleMakes.Commands.UpdateVehicleMakes;
@@ -41,7 +42,7 @@ namespace Car_Rental_Management.Features.VehicleMakes
         /// <response code="409">
         /// A vehicle make with the same name already exists.
         /// </response>
-        [Authorize]
+        [Authorize(Roles = RoleConstant.Manager)]
         [HttpPost]
         [MapToApiVersion("1.0")]
         [Consumes("application/json")]
@@ -94,7 +95,7 @@ namespace Car_Rental_Management.Features.VehicleMakes
         /// <response code="409">
         /// Another vehicle make already uses the same name.
         /// </response>
-        [Authorize]
+        [Authorize(Roles = RoleConstant.Manager)]
         [HttpPut("{Id:int}")]
         [MapToApiVersion("1.0")]
         [ProducesResponseType(
