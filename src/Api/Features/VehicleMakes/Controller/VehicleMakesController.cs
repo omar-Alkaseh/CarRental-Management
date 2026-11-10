@@ -10,7 +10,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Car_Rental_Management.Features.VehicleMakes
+namespace Car_Rental_Management.Features.VehicleMakes.Controller
 {
     [ApiController]
     [ApiVersion("1.0")]
@@ -42,7 +42,7 @@ namespace Car_Rental_Management.Features.VehicleMakes
         /// <response code="409">
         /// A vehicle make with the same name already exists.
         /// </response>
-        [Authorize(Roles = RoleConstant.Manager)]
+        [Authorize(Roles = $"{RoleConstant.Admin},{RoleConstant.Manager}")]
         [HttpPost]
         [MapToApiVersion("1.0")]
         [Consumes("application/json")]
@@ -95,7 +95,7 @@ namespace Car_Rental_Management.Features.VehicleMakes
         /// <response code="409">
         /// Another vehicle make already uses the same name.
         /// </response>
-        [Authorize(Roles = RoleConstant.Manager)]
+        [Authorize(Roles = $"{RoleConstant.Admin},{RoleConstant.Manager}")]
         [HttpPut("{Id:int}")]
         [MapToApiVersion("1.0")]
         [ProducesResponseType(

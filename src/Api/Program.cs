@@ -1,5 +1,6 @@
 using Car_Rental_Management.Common.Filters;
 using Car_Rental_Management.OpenApi.Transformers;
+using Car_Rental_Management.Seeders;
 using CarRental.Api.Exceptions;
 using CarRental.Application.Common.Security;
 using CarRental.Infrastructure.Auth.Settings;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
+using Scalar.AspNetCore;
 using System.Reflection;
 using System.Text;
 
@@ -112,6 +114,8 @@ builder.Services.AddApiVersioning(options =>
 
 var app = builder.Build();
 
+await IdentitySeeder.SeedAsync(app);
+
 app.UseExceptionHandler();
 
 app.UseStatusCodePages();
@@ -124,15 +128,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
-        foreach (var version in VersioningConstant.Versions)
-        {
-            var documentName = version.ToString();
+        options.SwaggerEndpoint($"/openapi/v1.json", $"CarRental API V1");
+        options.SwaggerEndpoint($"/openapi/v2.json", $"CarRental API V2");
 
-            options.SwaggerEndpoint(
-                $"/openapi/{documentName}.json",
-                $"CarRental API {documentName}");
-        }
+        options.EnableDeepLinking();
+        options.DisplayRequestDuration();
+        options.EnableFilter();
     });
+
+    app.MapScalarApiReference();
 }
 
 app.UseHttpsRedirection();

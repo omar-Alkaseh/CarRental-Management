@@ -32,6 +32,14 @@ namespace CarRental.Api.Exceptions
                         Status = StatusCodes.Status400BadRequest
                     },
 
+                InvalidOperationException ex =>
+                    new ProblemDetails
+                    {
+                        Title = "Api Error",
+                        Detail = ex.Message,
+                        Status = StatusCodes.Status400BadRequest
+                    },
+
                 _ => 
                     new ProblemDetails
                     {
